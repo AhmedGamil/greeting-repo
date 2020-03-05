@@ -23,11 +23,13 @@ public class GreetingController {
     @Autowired
     private GreetingService greetingService;
 
-    @GetMapping()
-    public ResponseEntity<String> greeting(@RequestParam("account")  AccountType accountType,
-                                           @RequestParam(name = "id", required = false) @Min(value = 1, message = "Id must be positive number") Integer id,
-                                           @RequestParam(name = "type", required = false) BusinessType businessType) {
+    @GetMapping(params = {"account=personal", "id"})
+    public ResponseEntity<String> greeting(@RequestParam("id") @NotNull @Min(value = 1, message = "id must be positive number") Integer id) {
+        return ResponseEntity.ok(greetingService.greeting(AccountType.personal, id, null));
+    }
 
-        return ResponseEntity.ok(greetingService.greeting(accountType, id, businessType));
+    @GetMapping(params = {"account=business", "type"})
+    public ResponseEntity<String> greeting(@RequestParam("type") @NotNull BusinessType businessType) {
+        return ResponseEntity.ok(greetingService.greeting(AccountType.business, null, businessType));
     }
 }

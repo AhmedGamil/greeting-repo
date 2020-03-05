@@ -15,6 +15,6 @@ public class SmallBusinessAccount extends BusinessAccount {
 
     @Override
     public String greeting() {
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED, "greeting is not implemented for small business");
+        throw new UnsupportedOperationException("greeting is not yet implemented for small business");
     }
 }
